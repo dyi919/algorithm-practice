@@ -4,7 +4,7 @@ temp = input().split()
 h = int(temp[0])
 m = int(temp[1])
 
-if m < 44:
+if m < 45:
     m = 60 - (45 - m)
     
     if h == 0: h = 23
