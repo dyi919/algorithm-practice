@@ -25,7 +25,7 @@ while seqIdx < len(seq) and len(ans) <= 2 * len(seq) and check:
 
     elif thru[len(thru) - 1] > seq[seqIdx]: check = False
 
-if len(ans) != 2 * len(seq):
+if len(ans) > 2 * len(seq):
     print("NO")
 else:
     for a in ans: print(a)
