@@ -2,16 +2,16 @@
 
 base = [0, 1, 1]
 
-def fib(n, prev: list):
+def G(n, arr: list):
     if n == 0:
         return 0
     if n < 3:
         return 1
     
     if n == 3: 
-        return sum(prev)
+        return sum(arr)
     
-    return fib(n - 1, [prev[1], prev[2], sum(prev)])
+    return G(n - 1, [arr[1], arr[2], sum(arr)])
 
 for i in range(10):
-    print(i,":", fib(i, base))
+    print("G", i, "=", G(i, base))
