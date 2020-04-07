@@ -1,63 +1,41 @@
 # get quad tree result
 
-import operator, sys
-
-ans = ""
-
-def check(arr):
-    cnt = 0
-    for line in arr:
-        for char in line:
-            if char == '1': cnt += 1
-
-    if cnt == len(arr) * len(arr) or cnt == 0:
-        return True
-    else: 
-        return False
-
 def quad(arr):
-    ans = "("
+    ans = ""
     n = len(arr[0])
 
-    if n == 2: 
-        ans += arr[0][0]
-        ans += arr[0][1]
-        ans += arr[1][0]
-        ans += arr[1][1]
+    if n == 1:
+        ans = arr[0][0]
 
     else:
         half = int(n/2)
-        lt, rt, lb, rb = ([[] * half for _ in range(half)] for _ in range(4))
+        lt = [[arr[i][j] for j in range(0, half)] for i in range(0, half)]
+        rt = [[arr[i][j] for j in range(half, n)] for i in range(0, half)] 
+        lb = [[arr[i][j] for j in range(0, half)] for i in range(half, n)] 
+        rb = [[arr[i][j] for j in range(half, n)] for i in range(half, n)]
 
-        for i in range(n):
-            if i < half:
-                lt[i] = [x for x in arr[i][0 : half]]
-                rt[i] = [x for x in arr[i][half : n]]
+        ans = "("
+        ans += quad(lt)
+        ans += quad(rt)
+        ans += quad(lb)
+        ans += quad(rb)
+        ans += ")"
 
-            else:
-                lb[i - half] = [x for x in arr[i][0 : half]]
-                rb[i - half] = [x for x in arr[i][half : n]]
-
-        res = lt[0][0] if check(lt) else quad(lt)
-        ans += res
-        res = rt[0][0] if check(rt) else quad(rt)
-        ans += res
-        res = lb[0][0] if check(lb) else quad(lb)
-        ans += res
-        res = rb[0][0] if check(rb) else quad(rb)
-        ans += res
-        
-    ans += ")"
+        if len(ans) == 6:
+            cnt = 0
+            for num in ans[1:5]:
+                if num == ans[1]: cnt += 1
+            if cnt == 4:
+                ans = ans[1]
+         
     return ans
 
 n = int(input())
 
-arr = [[] * n for _ in range(n)]
-line = []
-result = ""
+arr = []
 
-for i in range(n):
-    arr[i] = [x for x in sys.stdin.readline().rstrip()]
+for _ in range(n):
+    arr.append(list(input()))
 
 ans = quad(arr)
 print(ans)
