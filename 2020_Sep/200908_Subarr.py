@@ -1,19 +1,27 @@
-SUB = []
-
-
 def getSubset(ls, n, target):
-    subset = ([float('inf') for i in range(target + 1)] for i in range(n+1))
+    if target < 0 or n < 1:
+        return
+
+    if target == ls[n - 1]:
+        yield [ls[n - 1]]
+        return
+
+    for subset in getSubset(ls, n - 1, target):
+        yield subset
+
+    for subset in getSubset(ls, n - 1, target - ls[n - 1]):
+        yield subset + [ls[n - 1]]
 
 
-arr = [1, 2, 5, 5, 7, 2]
-target = 10
+arr = [1, 2, 6, 3, 17, 82, 23, 234]
+target = 1
+ls = [num for num in arr if num <= target]
 
-ls = arr.copy()
-ls.sort()
+sub = list(getSubset(ls, len(ls), target))
 
-while len(ls) != 0 and ls[-1] > target:
-    ls.pop(-1)
-
-print(ls)
-
-print("Ans:", list(getSubset(ls, target)))
+if sub == []:
+    print("No subset with sum %d exists." % target)
+else:
+    sub = min(sub, key=len)
+    ans = [i for i in range(len(arr)) if arr[i] in sub]
+    print(ans)
