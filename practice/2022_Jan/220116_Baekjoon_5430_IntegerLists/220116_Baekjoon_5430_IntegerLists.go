@@ -9,7 +9,7 @@ import (
 
 var scanner = bufio.NewScanner(os.Stdin)
 
-const MaxBuf int = 400000
+const MaxBuf int = 400001
 
 func main() {
 	w := bufio.NewWriter(os.Stdout)
