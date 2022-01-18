@@ -78,19 +78,12 @@ func main() {
 	scanner.Scan()
 	n, _ := strconv.Atoi(scanner.Text())
 	s = make([][]byte, n)
+	visitedHuman = make([][]bool, n)
+	visitedCow = make([][]bool, n)
+
 	for i := 0; i < n; i++ {
 		scanner.Scan()
 		s[i] = []byte(scanner.Text())
-	}
-	count := 0
-	for i := 0; i < n; i++ {
-		if s[0][i] == 'R' {
-			count++
-		}
-	}
-	visitedHuman = make([][]bool, n)
-	visitedCow = make([][]bool, n)
-	for i := 0; i < n; i++ {
 		visitedHuman[i] = make([]bool, n)
 		visitedCow[i] = make([]bool, n)
 		for j := 0; j < n; j++ {
