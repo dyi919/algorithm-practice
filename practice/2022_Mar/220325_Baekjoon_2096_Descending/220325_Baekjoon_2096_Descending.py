@@ -1,3 +1,5 @@
+# https://www.acmicpc.net/problem/2096
+
 from sys import stdin, maxsize
 
 N = int(input())
