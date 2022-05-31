@@ -4,11 +4,15 @@ MOD = 10007
 
 n = int(input())
 
-cache = [0] * (n+1)
-cache[1] = 1
-cache[2] = 2
+if n <= 3:
+    print(n)
 
-for i in range(3, n+1):
-    cache[i] = (cache[i-1] + cache[i-2]) % MOD
+else:
+    cache = [0] * (n+1)
+    cache[1] = 1
+    cache[2] = 2
 
-print(cache[n])
+    for i in range(3, n+1):
+        cache[i] = (cache[i-1] + cache[i-2]) % MOD
+
+    print(cache[n])
