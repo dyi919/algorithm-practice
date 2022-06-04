@@ -2,35 +2,39 @@
 
 from sys import stdin
 
-dr, dc = [-1, 0, 1, 0], [0, 1, 0, -1]
+direction_row, direction_col = [-1, 0, 1,
+                                0], [0, 1, 0, -1]  # north, east, south, west
 N, M = [int(x) for x in stdin.readline().split()]
-r, c, d = [int(x) for x in stdin.readline().split()]
+# direction - 0: north, 1: east, 2: south, 3: west
+row, col, direction = [int(x) for x in stdin.readline().split()]
 board = [[0] * M for _ in range(N)]
 for i in range(N):
     board[i] = [int(x) for x in stdin.readline().split()]
 ans = 0
 
 while True:
-    if board[r][c] == 0:
-        board[r][c] = 2
+    if board[row][col] == 0:
+        board[row][col] = 2
         ans += 1
     count = 0
     while count < 4:
-        if d == 0:
-            d = 3
+        if direction == 0:
+            direction = 3
         else:
-            d -= 1
-        next_r, next_c = r+dr[d], c+dc[d]
-        if board[next_r][next_c] == 0:
+            direction -= 1
+        next_row, next_col = row + \
+            direction_row[direction], col+direction_col[direction]
+        if board[next_row][next_col] == 0:
             break
         count += 1
     if count == 4:
-        back_r, back_c = r-dr[d], c-dc[d]
-        if board[back_r][back_c] == 1:
+        prev_row, prev_col = row - \
+            direction_row[direction], col-direction_col[direction]
+        if board[prev_row][prev_col] == 1:
             break
         else:
-            r, c = back_r, back_c
+            row, col = prev_row, prev_col
     else:
-        r, c = next_r, next_c
+        row, col = next_row, next_col
 
 print(ans)
