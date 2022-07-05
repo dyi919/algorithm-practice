@@ -1,4 +1,4 @@
-# https://www.acmicpc.net/problem/1967
+# https://www.acmicpc.net/problem/1167
 
 from sys import stdin
 from collections import deque
