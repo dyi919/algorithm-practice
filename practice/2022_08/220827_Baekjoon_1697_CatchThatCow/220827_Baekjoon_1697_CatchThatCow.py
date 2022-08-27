@@ -1,3 +1,5 @@
+# https://www.acmicpc.net/problem/1697
+
 from sys import stdin
 from collections import deque
 input = stdin.readline
