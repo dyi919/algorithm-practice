@@ -1,3 +1,5 @@
+# https://www.acmicpc.net/problem/18352
+
 from sys import stdin
 from collections import deque
 input = stdin.readline
@@ -11,7 +13,6 @@ ans = []
 for _ in range(M):
     a, b = map(int, input().split())
     edges[a].append(b)
-    edges[b].append(a)
 
 queue = deque()
 visited[X] = True
