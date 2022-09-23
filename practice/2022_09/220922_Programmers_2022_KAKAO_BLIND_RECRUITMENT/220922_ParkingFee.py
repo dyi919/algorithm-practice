@@ -1,3 +1,5 @@
+# https://school.programmers.co.kr/learn/courses/30/lessons/92341
+
 def solution(fees, records):
     num_records = len(records)
     records_list = []
