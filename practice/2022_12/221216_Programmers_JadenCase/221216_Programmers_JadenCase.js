@@ -1,3 +1,5 @@
+// https://school.programmers.co.kr/learn/courses/30/lessons/12951
+
 function convertToJadenCase(word) {
   const firstLetter = word.slice(0, 1).toUpperCase();
   const restLetters = word.slice(1).toLowerCase();
