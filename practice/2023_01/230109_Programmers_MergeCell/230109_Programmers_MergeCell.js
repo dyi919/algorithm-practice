@@ -36,7 +36,7 @@ function solution(commands) {
   function find(coord) {
     const [r, c] = coord;
 
-    if ([r, c].toString() === parent[r][c].toString()) {
+    if (isSameCoords([r, c], parent[r][c])) {
       return [Number(r), Number(c)];
     }
 
@@ -45,34 +45,21 @@ function solution(commands) {
     return parent[r][c];
   }
 
-  function updateAll(target, value, type) {
-    const _target = target.toString();
-
-    for (let i = 0; i < 51; i++) {
-      for (let j = 0; j < 51; j++) {
-        if (parent[i][j].toString() === _target) {
-          if (type === 'value') cell[i][j] = value;
-          else parent[i][j] = value;
-        }
-      }
-    }
-  }
-
   function update(param) {
     const [r, c, value] = param;
     const target = find([r, c]);
-    updateAll(target, value, 'value');
+
+    iterateAll((i, j) => {
+      if (isSameCoords(parent[i][j], target)) cell[i][j] = value;
+    });
   }
 
   function replace(param) {
     const [value1, value2] = param;
-    for (let i = 0; i < 51; i++) {
-      for (let j = 0; j < 51; j++) {
-        if (cell[i][j] === value1) {
-          cell[i][j] = value2;
-        }
-      }
-    }
+
+    iterateAll((i, j) => {
+      if (cell[i][j] === value1) cell[i][j] = value2;
+    });
   }
 
   function merge(param) {
@@ -83,27 +70,31 @@ function solution(commands) {
     const parent1 = find([r1, c1]);
     const parent2 = find([r2, c2]);
 
-    if (parent1.toString() !== parent2.toString()) {
+    if (!isSameCoords(parent1, parent2)) {
       parent[r2][c2] = parent1;
     }
 
-    updateAll(parent2, parent1, 'parent');
-    updateAll(parent1, value, 'value');
+    iterateAll((i, j) => {
+      if (isSameCoords(parent[i][j], parent2)) {
+        parent[i][j] = parent1;
+      }
+      if (isSameCoords(parent[i][j], parent1)) {
+        cell[i][j] = value;
+      }
+    });
   }
 
   function unmerge(param) {
     const [r, c] = param;
     const value = cell[r][c];
-    const _target = find([r, c]).toString();
+    const target = find([r, c]);
 
-    for (let i = 0; i < 51; i++) {
-      for (let j = 0; j < 51; j++) {
-        if (parent[i][j].toString() === _target) {
-          cell[i][j] = '';
-          parent[i][j] = [i, j];
-        }
+    iterateAll((i, j) => {
+      if (isSameCoords(parent[i][j], target)) {
+        cell[i][j] = '';
+        parent[i][j] = [i, j];
       }
-    }
+    });
 
     cell[r][c] = value;
   }
@@ -112,5 +103,17 @@ function solution(commands) {
     const [r, c] = param;
 
     return cell[r][c] === '' ? 'EMPTY' : cell[r][c];
+  }
+
+  function isSameCoords(coord1, coord2) {
+    return coord1.toString() === coord2.toString();
+  }
+
+  function iterateAll(callbackFn) {
+    for (let i = 0; i < 51; i++) {
+      for (let j = 0; j < 51; j++) {
+        callbackFn(i, j);
+      }
+    }
   }
 }
