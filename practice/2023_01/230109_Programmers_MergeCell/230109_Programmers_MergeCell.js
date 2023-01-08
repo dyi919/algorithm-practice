@@ -33,18 +33,6 @@ function solution(commands) {
 
   return answer;
 
-  function find(coord) {
-    const [r, c] = coord;
-
-    if (isSameCoords([r, c], parent[r][c])) {
-      return [Number(r), Number(c)];
-    }
-
-    parent[r][c] = find(parent[r][c]);
-
-    return parent[r][c];
-  }
-
   function update(param) {
     const [r, c, value] = param;
     const target = find([r, c]);
@@ -103,6 +91,18 @@ function solution(commands) {
     const [r, c] = param;
 
     return cell[r][c] === '' ? 'EMPTY' : cell[r][c];
+  }
+
+  function find(coord) {
+    const [r, c] = coord;
+
+    if (isSameCoords([r, c], parent[r][c])) {
+      return [Number(r), Number(c)];
+    }
+
+    parent[r][c] = find(parent[r][c]);
+
+    return parent[r][c];
   }
 
   function isSameCoords(coord1, coord2) {
