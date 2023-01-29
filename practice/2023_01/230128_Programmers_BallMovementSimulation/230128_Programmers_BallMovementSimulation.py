@@ -1,3 +1,5 @@
+# https://school.programmers.co.kr/learn/courses/30/lessons/87391
+
 def move(p1, p2, steps, boundary):
     if p1 == 0 and steps < 0:
         p2 -= steps
