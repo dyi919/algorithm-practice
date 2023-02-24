@@ -1,7 +1,7 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/160585
 
 def check_win(board, player):
-    R = len(board)
+    R, C = len(board), len(board[0])
     
     for row in board:
         start = row[0]
@@ -13,12 +13,12 @@ def check_win(board, player):
         else:
             return True
         
-    for col in board[0]:
-        start = col
+    for c in range(C):
+        start = board[0][c]
         if start != player: continue
 
         for row in board:
-            if row[0] != start:
+            if row[c] != start:
                 break
         else: 
             return True
@@ -31,11 +31,10 @@ def check_win(board, player):
         else:
             return True
 
-    
     start = board[0][-1]
     if start == player: 
         for i in range(R):
-            if board[i][-(i + 1)] != start:
+            if board[i][R - 1 - i] != start:
                 break
         else:
             return True
@@ -53,12 +52,10 @@ def solution(board):
                 count_X += 1
     
     diff = count_O - count_X
-    
-    if diff < 0: return 0
-    elif diff > 1: return 0
-    elif diff == 0:
-        if check_win(board, 'O'): return 0
-    else:
-        if check_win(board, 'X'): return 0
+
+    if diff < 0 or 1 < diff: return 0
+    else: 
+        if diff == 0 and check_win(board, 'O'): return 0
+        if diff == 1 and check_win(board, 'X'): return 0
     
     return 1
